@@ -35,7 +35,7 @@ def miller_rabins(prime_num):                                                   
         k += 1
     k -= 1
     m = quotient * 2 + reminder
-    if (prime_num==1) or (prime_num==2) or (prime_num==3):
+    if prime_num in [1,2,3]:
         print "Prime"
         exit()
 
