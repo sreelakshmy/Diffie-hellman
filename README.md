@@ -1,7 +1,9 @@
 Diffie-Hellman key exchange
 ============================
 
-	also called exponential key exchange. It is a method of digital encryption that uses numbers raised to specific powers to produce decryption keys on the basis of components that are never directly transmitted, making the task of a would-be code breaker mathematically overwhelming.
+also called exponential key exchange. It is a method of digital encryption that uses numbers raised to specific
+powers to produce decryption keys on the basis of components that are never directly transmitted, making the task of a 
+would-be code breaker mathematically overwhelming.
 
 Implement Diffie-Hellman:
 
