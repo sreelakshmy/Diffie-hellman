@@ -35,9 +35,7 @@ def miller_rabins(prime_num):                                                   
         k += 1
     k -= 1
     m = quotient * 2 + reminder
-    if prime_num in [1,2,3]:
-        print "Prime"
-        exit()
+
 
     for i in range(10):
         check = random.randint(2, n - 1)
