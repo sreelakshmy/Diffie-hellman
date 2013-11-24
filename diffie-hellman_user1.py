@@ -1,8 +1,5 @@
 #!/usr/bin/env python
 
-"""
-A simple echo server
-"""
 
 import socket
 import random
