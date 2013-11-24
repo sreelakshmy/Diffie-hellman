@@ -1,11 +1,23 @@
 import random
 import itertools
 new_range = lambda start, stop: iter(itertools.count(start).next, stop)
+"""
 
+Function to find the sqaure of a number
+
+"""
 
 def square(num_to_square):                                                          #  finding square
     squared = num_to_square*num_to_square
     return squared
+    
+"""
+
+Function to find the modular exponential 
+p = prime number
+find=> (num^a)(mod p)
+
+"""
 
 def modfun(num,a,p):                                                                # modular exponentiation
      if a == 1 :
@@ -18,12 +30,24 @@ def modfun(num,a,p):                                                            
          a=(a-1)/2
          return num*square(modfun(num,a,p))%p
 
+"""
+ 
+Function to find the generator of a given prime number
+generator=> generator^((p-1)/2)(mod prime_num)
+ 
+"""
+
 def find_generator(prime_num):                                                      # finding the generator in the group 
     gen_p = (prime_num-1)/2;
     for generator in new_range(1,prime_num-1):
         y=modfun(generator,gen_p,prime_num);
         if(y==prime_num-1):
             return generator
+
+"""
+Finding if the genreated random number is prime or not
+Miller rabbins test :n=prime_number-1
+"""
 
 def miller_rabins(prime_num):                                                           #primality testing
     n = prime_num - 1
@@ -34,6 +58,11 @@ def miller_rabins(prime_num):                                                   
         quotient, reminder = divmod(quotient, 2)
         k += 1
     k -= 1
+    """
+    
+    n=(2^k)*m    
+    
+    """
     m = quotient * 2 + reminder
 
 
@@ -54,9 +83,17 @@ def miller_rabins(prime_num):                                                   
             return string_check  
     string_check="Prime"
     return string_check
+"""
+main function()
 
+"""
 def main():                                                                             # main 
     
+    """
+    
+    random genration of number (for primality testing)
+    
+    """
     prime_num= random.randint(100000000000,9999999999999999999999999)
     string_check=miller_rabins(prime_num)                                               # testing modulus value
     while True:
@@ -67,13 +104,29 @@ def main():                                                                     
             break
     print prime_num, string_check                                                       # final modulus value
     generator=find_generator(prime_num)
-
+    """
+    
+    generation of private key for the users
+    
+    """
     priv_key_of_user1=random.randint(100000000000,9999999999999999999999999)
     priv_key_of_user2=random.randint(100000000000,9999999999999999999999999)
    
+    """
+    verification of the key genrated:
+    X=g^a mod p
+    Y=g^b mod p
+    
+    """
     key_by_user1=modfun(generator,priv_key_of_user1,prime_num)
     key_by_user2=modfun(generator,priv_key_of_user2,prime_num)
+    """
     
+    Key_a=X^b mod p
+    Key_b=Y^a mod p
+    compare :key_a==key_b
+    
+    """
     key_from_user2=modfun(key_by_user2,priv_key_of_user1,prime_num)
     key_from_user1=modfun(key_by_user1,priv_key_of_user2,prime_num)
 
