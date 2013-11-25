@@ -7,17 +7,18 @@ Diffie-hellman user2
 import socket
 import random
 from common import *
+import ConfigParser
 """
 main function
 """
 def main():                                                                             # main 
     #prime number after the checking
-    prime_num=_random()
-    
-    #Networking
-    
-    host = 'localhost'
-    port = 5032
+    config = ConfigParser.ConfigParser()
+    config.read('config.cfg')
+    host = config.get('networking', 'ip')
+    port = int(config.get('networking', 'port'))
+ 
+    prime_num=generate_random()
     size = 1024
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect((host,port))

@@ -6,14 +6,16 @@ Diffie-hellman user1
 import socket
 import random
 from common import *
+import ConfigParser
 
 """
 main function
 """
 def main():                                                                             # main 
-    
-    host = ''
-    port =5032# int(raw_input("Port number:"))
+    config = ConfigParser.ConfigParser()
+    config.read('config.cfg')
+    host = config.get('networking', 'ip')
+    port = int(config.get('networking', 'port'))
     backlog = 5
     size = 1024
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
