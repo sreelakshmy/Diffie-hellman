@@ -5,7 +5,7 @@ Diffie-hellman user1
 
 import socket
 import random
-
+from common import *
 
 """
 main function
