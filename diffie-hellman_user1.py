@@ -5,42 +5,7 @@ Diffie-hellman user1
 
 import socket
 import random
-import itertools
-new_range = lambda start, stop: iter(itertools.count(start).next, stop)
 
-"""
-Function to find the sqaure of a number
-"""
-def square(num_to_square):                                                          #  finding square
-    squared = num_to_square*num_to_square
-    return squared
-
-"""
-Function to find the modular exponential 
-p = prime number
-find=> (num^a)(mod p)
-"""
-def modfun(num,a,p):                                                                # modular exponentiation
-     if a == 1 :
-        return num%p
-     else:
-      if a%2 == 0:
-         a=a/2
-         return square(modfun(num,a,p))%p
-      else:
-         a=(a-1)/2
-         return num*square(modfun(num,a,p))%p
-
-"""
-Function to find the generator of a given prime number
-generator=> generator^((p-1)/2)(mod prime_num)
-"""
-def find_generator(prime_num):                                                      # finding the generator in the group 
-    gen_p = (prime_num-1)/2;
-    for generator in new_range(1,prime_num-1):
-        y=modfun(generator,gen_p,prime_num);
-        if(y==prime_num-1):
-            return generator
 
 """
 main function
