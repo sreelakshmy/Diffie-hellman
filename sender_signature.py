@@ -12,7 +12,10 @@ hash1=int(hashed,16)
 print "hashed :"
 print hash1
 signature=rsa.sign(hash1,"")
-sign=str(signature)
+for x in signature:
+    sig=x
+    break
+sign=str(sig)
 data1=str(sign)+str('@')+str(secret)
 host = 'localhost'
 port = 50002
