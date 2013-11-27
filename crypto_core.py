@@ -24,7 +24,7 @@ class RSAVerify(object):
         rec_signed_msg,msg=data_c1.split('@')
 	    rec_signed_message=int(rec_signed_message)
 	    rec_hashed_message=int(pow(rec_signed_message,e,N))
-	    decr_hashed_message = self.calculate_hash(msg)
+	    decr_hashed_message = int(self.calculate_hash(msg),16)
 	    if rec_hashed_message == decr_hashed:
 	        flag=1
 	    else:
