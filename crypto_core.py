@@ -1,14 +1,23 @@
 class RSASign(object):
-    def __init__(self, s, d):
+    def __init__(self, s, d, n):
         self.d = d
         self.socket = s
+        self.n = n
 
-    def sign(self, msg):
-        pass
+    def hashed(self,msg):
+        hashed = hashlib.sha256(msg).hexdigest()
+        hashed_message=int(hashed,16)
+        return hashed_message
+
+    def sign(self, hashed):
+        signed_message=pow(hash_m,d,n)
+        return signed_message
 
     def sign_and_send(msg):
-        signed_message = self.sign(msg)
-        self.s.send(str(signed_message))
+        hashed_message = self.hashed(msg)
+        signed_message = self.sign(hashed_message)
+        self.s.send(str(signed_message)+'@'+str(msg))
+
 
 class RSAVerify(object):
     def __init__(self, s, e, N):
