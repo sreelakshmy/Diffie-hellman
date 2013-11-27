@@ -23,8 +23,7 @@ n=int(h,16)
 e=65537
 
 si,msg=data_c1.split('@')
-si=si.replace("(","")
-si=si.replace("L,)","")
+
 
 sig=int(si)
 hashed_rec=int(pow(sig,e,n))
