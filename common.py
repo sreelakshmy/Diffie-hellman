@@ -84,3 +84,10 @@ def generate_random():										# creating prime number
         if(string_check=='Prime'):
             break
     return prime_num
+"""
+Function to hash the message
+"""
+def hashed(self,msg):
+    hashed = hashlib.sha256(msg).hexdigest()
+    hashed_message=int(hashed,16)
+    return hashed_message
