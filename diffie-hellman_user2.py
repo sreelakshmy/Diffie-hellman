@@ -1,57 +1,50 @@
 #!/usr/bin/env python
-"""
-Diffie-hellman user2
-"""
-
 
 import socket
 import random
-from common import *
+import common
 import ConfigParser
-"""
-main function
-"""
-def main():                                                                             # main 
-    #prime number after the checking
+
+from crypto_core import RSASign, RSAVerify
+
+def main():
+    general_config = ConfigParser.ConfigParser()
     config = ConfigParser.ConfigParser()
-    config.read('config.cfg')
-    host = config.get('networking', 'ip')
-    port = int(config.get('networking', 'port'))
- 
-    prime_num=generate_random()
-    size = 1024
+
+    general_config.read('config.cfg')
+    config.read('config_user2.cfg')
+    host = general_config.get('networking', 'ip')
+    port = int(general_config.get('networking', 'port'))
+    lower_range_DH = int(general_config.get('crypto', 'lower_range_DH'))
+    upper_range_DH = int(general_config.get('crypto', 'upper_range_DH'))
+
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect((host,port))
-    data_c1=str(prime_num)
 
-    generator=find_generator(prime_num)
-    priv_key_of_current=random.randint(100000000000,9999999999999999999999999)
-    key_by_current=modfun(generator,priv_key_of_current,prime_num)
+    other_N, other_e = config.get('crypto_user1', 'N'), config.get('crypto_user1', 'e')
+    other_N, other_e = int(other_N), int(other_e)
 
-    data_c2=str(key_by_current)
-    s.send(data_c1)
-    print "Prime number Send                    :",prime_num                            
-    data_s1 = s.recv(size)
-    key_from_other=int(data_s1)
-    print "key from other Received              :", key_from_other
-    
-    final_key_current=modfun(key_from_other,priv_key_of_current,prime_num)
-    
-    if data_s1:
-        s.send(data_c2)
-        print "Key from current Send                  :",key_by_current
-    data_s2 = s.recv(size)
-    final_key_other=int(data_s2) 
-    print "Final Key from other Received        :",final_key_other
-    data_c3=str(final_key_current)
-    if data_s2:
-        s.send(data_c3)
-        print "Final key from current Send            :",final_key_current
-    s.close()
-    if final_key_other==final_key_current:
-        print "Key Exchange done!!!"
-    else:
-        print "Oops,Key exchange failed.\nTry again!"
+    N = config.get('crypto_user2', 'N')
+    e = config.get('crypto_user2', 'e')
+    d = config.get('crypto_user2', 'd')
+    p = config.get('crypto_user2', 'p')
+    q = config.get('crypto_user2', 'q')
+
+    signer = RSASign(s, d, N)
+    verifier = RSAVerify(s, other_e, other_N)
+
+    DH_prime = common.generate_random()
+    generator = common.find_generator(DH_prime)
+    signer.sign_and_send(DH_prime)
+
+    x2 = random.randint(lower_range_DH, upper_range_DH)
+    y2 = common.modfun(generator, x2, DH_prime)
+    signer.sign_and_send(y2)
+
+    y1 = verifier.recv_and_verify()
+    y12 = common.modfun(y1, x2, DH_prime)
+
+    print "[+] Negotiated session key", y12
 
 
 if __name__ == "__main__":
