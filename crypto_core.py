@@ -10,12 +10,13 @@ class RSASign(object):
     the wire
     """
     def __init__(self, s, d, N):
-        self.socket = s
+        self.s = s
         self.d = Integer(d)
         self.N = Integer(N)
 
     def sign(self, msg):
         # Calculate the hash
+        msg = str(msg)
         hashed_message = Integer(calculate_hash(msg))
         # Calculate the signature of the hash and return
         signed_message=power_mod(hashed_message,self.d,self.N)
@@ -40,7 +41,8 @@ class RSAVerify(object):
 
     def verify(self, msg):
         # Split the message to get the signature and the message
-        signed_hash, msg = msg.split('@')
+        vals = msg.split('@')
+        signed_hash, msg = vals[0], vals[1]
         signed_hash      = Integer(signed_hash)
         # Recalculate the hash of the message
         recalculated_hash = Integer(calculate_hash(msg))
@@ -55,6 +57,5 @@ class RSAVerify(object):
     def recv_and_verify(self):
         # Receive the message and verify it
         received_message = self.s.recv(1024).strip()
-        received_message = int(received_message)
-        message = verify(received_message)
-        return message
+        message = self.verify(received_message)
+        return int(message)
