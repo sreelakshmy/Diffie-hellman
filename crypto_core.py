@@ -1,3 +1,5 @@
+
+DELIM="\n"
 class RSASign(object):
     def __init__(self, s, d, n):
         self.d = d
@@ -11,7 +13,7 @@ class RSASign(object):
 
     def sign_and_send(msg):
         signed_message = self.sign(msg)
-        self.s.send(str(signed_message)+'@'+str(msg))
+        self.s.send(str(signed_message)+'@'+str(msg)+DELIM)
 
 
 class RSAVerify(object):
@@ -21,24 +23,18 @@ class RSAVerify(object):
         self.s = s
 
     def verify(self, msg):
-            rec_signed_msg,msg=data_c1.split('@')
+            rec_signed_msg,rec_msg=msg.split('@')
 	    rec_signed_message=int(rec_signed_message)
 	    rec_hashed_message=int(pow(rec_signed_message,e,N))
-	    decr_hashed_message = int(calculate_hash(msg),16)
+	    decr_hashed_message = int(calculate_hash(rec_msg),16)
 	    if rec_hashed_message == decr_hashed:
-	        flag=1
+	        return rec_msg
 	    else:
-	        flag=0
-	    return flag
+	        exit()
 
     def recv_and_verify():
         received_message = self.s.recv(1024)
         received_message = int(received_message)
         message = verify(received_message)
-        if message==1:
-            print "valid"
-        else:
-            print "invalid"
-            exit()
         return message
     
