@@ -21,7 +21,7 @@ class RSASign(object):
         signed_message=power_mod(hashed_message,self.d,self.N)
         return signed_message
 
-    def sign_and_send(msg):
+    def sign_and_send(self, msg):
         # Calculate the signature of the hash and send over the
         # network
         signed_message = self.sign(msg)
@@ -52,7 +52,7 @@ class RSAVerify(object):
             return False
         return msg
 
-    def recv_and_verify():
+    def recv_and_verify(self):
         # Receive the message and verify it
         received_message = self.s.recv(1024).strip()
         received_message = int(received_message)
