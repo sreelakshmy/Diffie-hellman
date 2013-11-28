@@ -1,6 +1,5 @@
+
 from common import *
-
-
 DELIM="\n"
 class RSASign(object):
     def __init__(self, s, d, n):
