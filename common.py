@@ -87,7 +87,7 @@ def generate_random():										# creating prime number
 """
 Function to hash the message
 """
-def hashed(self,msg):
-    hashed = hashlib.sha256(msg).hexdigest()
-    hashed_message=int(hashed,16)
+def calculate_hashed(msg):
+    hashed_msg = hashlib.sha256(msg).hexdigest()
+    hashed_message=int(hashed_msg,16)
     return hashed_message
