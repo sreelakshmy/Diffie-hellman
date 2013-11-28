@@ -3,7 +3,7 @@ import math
 import socket
 from Crypto.PublicKey import RSA
 import hashlib
-keyname='file1.txt'
+keyname='private_key.pem'
 keydata = open(keyname, "r").read()
 rsa = RSA.importKey(keydata)
 secret = "abcd"
