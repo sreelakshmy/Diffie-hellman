@@ -1,4 +1,3 @@
-
 DELIM="\n"
 class RSASign(object):
     def __init__(self, s, d, n):
@@ -24,7 +23,7 @@ class RSAVerify(object):
 
     def verify(self, msg):
             rec_signed_msg,rec_msg=msg.split('@')
-	    rec_signed_message=int(rec_signed_message)
+	    rec_signed_message=int(rec_signed_msg)
 	    rec_hashed_message=int(pow(rec_signed_message,e,N))
 	    decr_hashed_message = int(calculate_hash(rec_msg),16)
 	    if rec_hashed_message == decr_hashed:
