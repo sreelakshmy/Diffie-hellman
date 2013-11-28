@@ -1,4 +1,3 @@
-
 from common import *
 DELIM="\n"
 class RSASign(object):
@@ -12,7 +11,7 @@ class RSASign(object):
         signed_message=pow(hash_message,d,n)
         return signed_message
 
-    def sign_and_send(msg):
+    def sign_and_send(self,msg):
         signed_message = self.sign(msg)
         self.s.send(str(signed_message)+'@'+str(msg)+DELIM)
 
