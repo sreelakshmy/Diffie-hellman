@@ -1,5 +1,7 @@
 import  random
 import itertools
+import hashlib
+
 new_range = lambda start, stop: iter(itertools.count(start).next, stop)
 
 """
