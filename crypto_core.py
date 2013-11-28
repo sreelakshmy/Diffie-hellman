@@ -5,12 +5,12 @@ class RSASign(object):
         self.n = n
     
     def sign(self, msg):
-	    hashed_message = self.calculate_hash(msg)
-        signed_message=pow(hash_m,d,n)
+	hashed_message = calculate_hash(msg)
+        signed_message=pow(hash_message,d,n)
         return signed_message
 
     def sign_and_send(msg):
-        signed_message = self.sign(hashed_message)
+        signed_message = self.sign(msg)
         self.s.send(str(signed_message)+'@'+str(msg))
 
 
@@ -21,10 +21,10 @@ class RSAVerify(object):
         self.s = s
 
     def verify(self, msg):
-        rec_signed_msg,msg=data_c1.split('@')
+            rec_signed_msg,msg=data_c1.split('@')
 	    rec_signed_message=int(rec_signed_message)
 	    rec_hashed_message=int(pow(rec_signed_message,e,N))
-	    decr_hashed_message = int(self.calculate_hash(msg),16)
+	    decr_hashed_message = int(calculate_hash(msg),16)
 	    if rec_hashed_message == decr_hashed:
 	        flag=1
 	    else:
